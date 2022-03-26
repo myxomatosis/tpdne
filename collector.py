@@ -35,6 +35,7 @@ def get_image():
                 conn.request("GET",f"/img/{response[0]['name']}")
                 res = conn.getresponse()
                 data = res.read()
+                conn.close()
                 if res.status == 200:
                     with open(file_name,'wb') as f:
                         f.write(data)
