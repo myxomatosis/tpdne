@@ -46,4 +46,9 @@ def get_image():
         print(f"Invalid response from get_link(). Response code: {response[1]}")
 
 
-get_image()
+def main():
+    get_image()
+
+
+if __name__=="__main__":
+    main()
