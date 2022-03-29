@@ -7,7 +7,7 @@ import logging
 # set up logging to file
 logging.basicConfig(level=logging.DEBUG,
                             format='%(asctime)s %(levelname)-8s %(message)s',
-                                                                    filename='/var/log/tpdne.log')
+                                                                    filename='collector_tpdne.log')
 # define a Handler which writes INFO messages or higher to the sys.stderr
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
@@ -28,7 +28,7 @@ def get_link():
     return data, status
 
 
-def get_image(num=1000000):
+def get_image(num):
     for val in range(1, num + 1):
         response = get_link()
         file_name = "ai_generated_pictures/" + response[0]["name"][7:]
@@ -43,7 +43,7 @@ def get_image(num=1000000):
                         f.write(data)
                     logging.info(f'{val}\t==>Image sucessfully Downloaded: {file_name}')
                 else:
-                    logging.warn(f"Invalid response from get_image(). Response code: {res.status}")
+                    logging.warning(f"Invalid response from get_image(). Response code: {res.status}")
             else:
                 if getsize(file_name) == 0:
                     conn = http.client.HTTPSConnection("this-person-does-not-exist.com")
@@ -55,9 +55,9 @@ def get_image(num=1000000):
                             f.write(data)
                         logging.info(f'{val}\t==>Image sucessfully Downloaded: {file_name}')
                     else:
-                        logging.warn(f"File exists: {file_name}")
+                        logging.warning(f"File exists: {file_name}")
         else:
-            logging.warn(f"Invalid response from get_link(). Response code: {response[1]}")
+            logging.warning(f"Invalid response from get_link(). Response code: {response[1]}")
     conn.close()
 
 
@@ -71,7 +71,7 @@ def main():
             get_image(int(val))
             break
         except:
-                logging.warn(f"Invalid input provided. Please choose a number.")
+                logging.warning(f"Invalid input provided. Please choose a number.")
 
 if __name__=="__main__":
     main()
